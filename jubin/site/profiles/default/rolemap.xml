@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<rolemap>
+  <permissions>
+    <!-- -*- extra stuff goes here -*- -->
+    <permission name="jubin.site: Add AddressBook" acquire="False">
+      <role name="Manager" />
+    </permission>
+
+    <permission name="jubin.site: Add StationPartner" acquire="False">
+      <role name="Manager" />
+      <role name="Contributor" />
+    </permission>
+
+    <permission name="jubin.site: Add RestaurantPartner" acquire="False">
+      <role name="Manager" />
+      <role name="Contributor" />
+    </permission>
+
+    <permission name="jubin.site: Add CommercialPartner" acquire="False">
+      <role name="Manager" />
+      <role name="Contributor" />
+    </permission>
+
+    <permission name="jubin.site: Add Slide" acquire="False">
+      <role name="Manager" />
+    </permission>
+
+  </permissions>
+</rolemap>

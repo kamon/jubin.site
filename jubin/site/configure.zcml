@@ -1,0 +1,78 @@
+﻿<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="jubin.site">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+  <include package="plone.app.z3cform" />
+
+  <!-- Include the sub-packages that use their own configure.zcml files. -->
+  <include package=".browser" />
+
+  <include package=".content" />
+
+  <!-- include package=".portlets" / -->
+  <i18n:registerTranslations directory="locales" />
+
+  <include file="skins.zcml" />
+
+  <!-- Geo location component -->
+  <adapter
+      factory=".content.station.LocationMarker"
+      provides="Products.Maps.interfaces.marker.IRichMarker"
+      />
+
+  <class class=".content.station.LocationMarker">
+    <allow interface="Products.Maps.interfaces.marker.IRichMarker" />
+  </class>
+
+  <adapter
+      for=".interfaces.IJubinStationLocation"
+      factory="Products.Maps.adapters.ContextMap"
+      />
+
+  <!-- Binding the default map view -->
+  <browser:page
+      for=".interfaces.IJubinStationLocation"
+      name="maps_googlemaps_view"
+      class="Products.Maps.browser.map.DefaultMapView"
+      permission="zope2.View"
+      allowed_interface="Products.Maps.interfaces.map.IMapView"
+      />
+
+  <!-- Register the installation GenericSetup extension profile -->
+  <genericsetup:registerProfile
+      name="default"
+      title="Jubin Site logic and content"
+      directory="profiles/default"
+      description="Jubin Site application logic and content types"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+
+    <utility factory=".vocabularies.SwissStatesFromFile" />
+
+    <utility
+        component=".vocabularies.SwissStates"
+        name="jubin.states"
+        />
+
+    <utility factory=".vocabularies.SwissCitiesFromConfig" />
+
+    <utility
+        component=".vocabularies.SwissCities"
+        name="jubin.cities"
+        />
+
+    <utility factory=".vocabularies.SwissCitiesForSearchFromConfig" />
+
+    <utility
+        component=".vocabularies.SwissCitiesForSearch"
+        name="jubin.searchcities"
+        />
+        
+</configure>

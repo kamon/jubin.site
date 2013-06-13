@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+
+    <javascript 
+        cacheable="True" 
+        compression="none" 
+        cookable="True"
+        enabled="True" 
+        id="++resource++jubin-easySlider.js"
+        inline="False"
+    />
+
+    <javascript 
+        cacheable="True" 
+        compression="none" 
+        cookable="True"
+        enabled="True" 
+        id="++resource++jubin-slider-settings.js"
+        inline="False"
+    />
+
+    <javascript 
+        cacheable="True" 
+        compression="none" 
+        cookable="True"
+        enabled="True" 
+        expression="python:request['URL'].endswith('partnersearch')"
+        id="++resource++jubin-partnersearch.js"
+        inline="False"
+    />
+
+</object>

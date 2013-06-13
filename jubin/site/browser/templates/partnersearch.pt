@@ -1,0 +1,162 @@
+﻿
+        <h1 tal:content="context/title_or_id" />
+
+        <tal:block define="global portal_url nocall: context/portal_url;
+                           global category view/category;
+                           global results view/getResults;
+                           global results_len python:len(results);
+                           global Batch python:modules['Products.CMFPlone'].Batch;
+                           global results_start request/results_start | python:0;
+                           global results_size request/results_size | python:10;
+                           global batch_organizations python:Batch(results, results_size, int(results_start), orphan=1, b_start_str='results_start');
+                           global template_id string:partnersearch;
+                           global here nocall:context;
+                           global isStation python: category=='station';
+                           global isCommerce python: category=='commerce';
+                           global isRestaurant python: category=='restaurant';" />
+
+        <div tal:condition="isStation" >
+           <p>Rechercher une station-service près de chez vous</p>
+        </div>
+        <div tal:condition="isRestaurant" >
+           <p>Rechercher un restaurateur près de chez vous</p>
+        </div>
+        <div tal:condition="isCommerce" >
+           <p>Rechercher un partenaire commercial de Jubin près de chez vous</p>
+        </div>
+
+	    <form action="." method="post"
+              tal:condition="python: isStation or isRestaurant or isCommerce"
+              tal:attributes="action request/getURL; enctype view/enctype">
+
+          <table>
+             <tr>
+                <td tal:repeat="fieldname python:['search_zip', 'search_city', 'search_state']" >
+                   <tal:field tal:define="widget python:view.widgets[fieldname]" >
+                     <tal:widget tal:define="hidden python:widget.mode == 'hidden'" >
+                        <metal:field use-macro="context/@@ploneform-macros/field" />
+                     </tal:widget>
+	               </tal:field>
+                </td>
+
+                <td>
+                   <metal:field use-macro="context/@@ploneform-macros/actions" />
+                </td>
+             </tr>
+          </table>
+
+	    </form>
+
+        <div tal:condition="not: results_len" >
+           Aucune donnée trouvée par rapport à vos critères de recherche.
+        </div>
+        
+        <table class="listing grid" tal:condition="results_len" >
+
+                <tr>
+                    <th>  
+                      <tal:if condition="isStation" >
+                        Station-service
+                      </tal:if>
+                      <tal:if condition="isRestaurant" >
+                        Restaurateur
+                      </tal:if>
+                      <tal:if condition="isCommerce" >
+                        Partenaire
+                      </tal:if>
+                    </th>
+
+                    <th>T&eacute;l&eacute;phone</th>
+
+                    <tal:if condition="isStation" >
+                      <th>SP 95</th>
+                      <th>SP 98</th>
+                      <th>Diesel</th>
+
+                      <th>Shop</th>
+                      <th>Lavage</th>
+                    </tal:if>
+
+                    <tal:if condition="isCommerce" >
+                      <th>R&eacute;duction</th>
+                      <th>Conditions</th>
+                    </tal:if>
+
+                    <th tal:condition="python: isRestaurant or isCommerce" > </th>
+
+                    <th tal:condition="isStation" ></th>
+                </tr>
+
+                <tal:block repeat="org batch_organizations">
+                  <tr>
+                    <td>
+                       <strong tal:content="org/Title | org/title_or_id"/> 
+                       <br />
+                       <tal:desc condition="isCommerce" > 
+                         <strong tal:content="org/Description" /><br />
+                       </tal:desc>
+                       <tal:address define="address org/address | nothing"
+                                    condition="address" > 
+                         <span tal:content="address" /><br />
+                       </tal:address>
+                       <tal:block define="city_vocab python:org.getField('city').Vocabulary()" >
+                         <span tal:content="org/zip" />
+                         <span tal:define="city python:city_vocab.getValue(org.city)"
+                               tal:content="python:city or org.city" />
+                       </tal:block>
+                    </td>
+
+                    <td> <span tal:content="org/phone" /> </td>
+
+                    <tal:if condition="isStation" >
+                      <td style="text-align: center" > 
+                           <img tal:condition="org/sp95 | nothing" 
+                                tal:attributes="src string:$portal_url/bulletBig.gif" /> 
+                      </td>
+                      <td style="text-align: center" > 
+                           <img tal:condition="org/sp98 | nothing" 
+                                tal:attributes="src string:$portal_url/bulletBig.gif" /> 
+                      </td>
+                      <td style="text-align: center" > 
+                           <img tal:condition="org/diesel | nothing" 
+                                tal:attributes="src string:$portal_url/bulletBig.gif" /> 
+                      </td>
+
+                      <td style="text-align: center" >
+                           <img tal:condition="org/shop | nothing" 
+                                tal:attributes="src string:$portal_url/bulletBig.gif" /> 
+                      </td>
+                      <td style="text-align: center" >
+                           <img tal:condition="org/lavage | nothing" 
+                                tal:attributes="src string:$portal_url/bulletBig.gif" /> 
+                      </td>
+                    </tal:if>
+
+                    <tal:if condition="isCommerce" >
+                      <td tal:content="org/reduction" />
+                      <td tal:content="org/reductionConditions" />
+                    </tal:if>
+
+                    <td tal:condition="python: isRestaurant or isCommerce" >
+                       <a class="website-link"
+                          tal:condition="org/web | nothing"
+                          href="" tal:attributes="href org/web" > 
+                          <img src="" alt="Site Internet"
+                               tal:attributes="src string:$portal_url/bouton_acces_vide.png" />
+                       </a>
+                    </td>
+
+                    <td tal:condition="isStation" > 
+                       <a class="view-link" href="" tal:attributes="href org/absolute_url" > 
+                          <img src=""
+                               tal:attributes="src string:$portal_url/bouton_acces_vide.png" />
+                       </a> 
+                    </td>
+                  </tr>
+                </tal:block>
+
+        </table>
+
+        <div metal:use-macro="context/custom_batch_macros/macros/navigation" />
+
+        <!-- div tal:content="structure request" / -->

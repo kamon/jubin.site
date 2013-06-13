@@ -1,0 +1,96 @@
+﻿<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="jubin.site">
+
+  <include package="plone.app.contentmenu" />
+
+
+    <!-- The portal header override for Jubin -->
+    <browser:viewlet
+        name="plone.header"
+        manager="plone.app.layout.viewlets.interfaces.IPortalTop"
+        layer="jubin.site.interfaces.IJubinSiteSpecific"
+        template="templates/portal_header.pt"
+        permission="zope2.View" 
+        />
+
+
+  <!-- -*- extra stuff goes here -*- -->
+
+  <!-- Slide specific view -->
+  <browser:page
+        for="jubin.site.interfaces.IJubinSlide"
+        name="slideview"
+        template="templates/slideview.pt"
+        permission="zope2.View"
+      />
+
+  <!-- Slider view -->
+  <browser:page
+        for="*"
+        name="banner"
+        template="templates/banner.pt"
+        permission="zope2.View"
+      />
+
+  <!-- News archives or other pretty listing view -->
+  <browser:page
+      for="*"
+      name="pretty_folder_listing"
+      template="templates/pretty_folder_listing.pt"
+      permission="zope2.View"
+      />
+
+  <!-- Station specific view -->
+  <browser:page
+        for="jubin.site.interfaces.IBasePartner"
+        name="partnerview"
+        template="templates/partnerview.pt"
+        permission="zope2.View"
+      />
+
+
+  <browser:page
+      for="*"
+      name="partners"
+      class=".partnersview.PartnersView"
+      allowed_interface=".partnersview.IPartnersView"
+      permission="zope.Public"
+      />
+
+  <browser:page
+      for="*"
+      name="partnersearch"
+      class=".partnersearch.PartnerSearchFormView"
+      permission="zope2.View"
+      />
+
+    <browser:resource
+		name="jubin-easySlider.js"
+		file="resources/easySlider.js"
+	/>
+	<browser:resource
+	    name="jubin-easySlider.css"
+	    file="resources/easySlider.css"
+	/>
+
+	<browser:resource
+	    name="jubin-slider-settings.js"
+	    file="resources/slider-settings.js"
+	/>
+	<browser:resource
+	    name="jubin-slider-settings.css"
+	    file="resources/slider-settings.css"
+	/>
+
+	<browser:resource
+	    name="jubin-partnersearch.js"
+	    file="resources/partnersearch.js"
+	/>
+	<browser:resource
+	    name="jubin-partnersearch.css"
+	    file="resources/partnersearch.css"
+	/>
+
+</configure>

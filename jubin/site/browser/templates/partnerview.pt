@@ -1,0 +1,99 @@
+﻿<html metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone" >
+      
+<metal:block metal:fill-slot="css_slot">
+<style type="text/css" >
+.stationPhotoContainer {
+
+}
+</style>
+</metal:block>
+
+<metal:block metal:fill-slot="javascript_head_slot">
+<script type="text/javascript" >
+
+</script>
+</metal:block>
+
+<body>
+
+<div metal:fill-slot="main" >
+
+<div tal:define="portal_url nocall: context/portal_url;
+                 partner_type context/meta_type;
+                 isStation python:partner_type == 'JubinStationPartner';
+                 isCommerce python:partner_type == 'JubinCommercialPartner'" >
+
+  <h1 tal:content="context/Title" />
+
+  <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+
+  <table class="listing grid" >
+     <tr>
+          <th>Adresse</th>
+          <th>Téléphone</th>
+
+          <tal:if condition="isStation" >
+            <th>Horaires d'ouverture</th>
+          </tal:if>
+
+          <tal:if condition="isCommerce" >
+            <th>Réduction</th>
+            <th>Conditions</th>
+          </tal:if>
+
+          <th></th>
+     </tr>
+     <tr>
+          <td tal:define="city_vocab python:context.getField('city').Vocabulary()" > 
+             <tal:address define="address context/address | nothing"
+                          condition="address" > 
+                 <span tal:content="address" /><br />
+             </tal:address>
+
+             <span tal:content="context/zip" />
+             <span tal:define="city python:city_vocab.getValue(context.city)"
+                   tal:content="python:city or context.city" />
+          </td>
+          <td> 
+            <span tal:content="context/phone" />
+          </td>
+
+          <tal:if condition="isStation" >
+            <td> <div tal:replace="structure context/opening" /> </td>
+          </tal:if>
+
+          <tal:if condition="isCommerce" >
+            <td tal:content="context/reduction" />
+            <td tal:content="context/reductionConditions" />
+          </tal:if>
+
+          <td> 
+             <a class="website-link"
+                tal:condition="context/web | nothing"
+                href="" tal:attributes="href context/web" > 
+                  <img src="" alt="Site Internet"
+                       tal:attributes="src string:$portal_url/bouton_acces_vide.png" />
+             </a>
+          </td>
+     </tr>
+  </table>
+
+  <tal:if condition="isStation" >
+     <div class="googleMapView" style="padding-top: 2em"
+          tal:define="view context/@@maps_googlemaps_view" >
+        <div metal:use-macro="here/maps_map/macros/markers" />
+     </div>
+  </tal:if>
+
+  <div tal:replace="structure provider:plone.belowcontentbody" />
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

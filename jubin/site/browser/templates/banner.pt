@@ -1,0 +1,80 @@
+﻿<!-- Slider -->
+<div id="slider_container" >
+
+      <div id="slider" >
+      <ul tal:define="portal_url nocall: context/portal_url;
+                      site_url python: portal_url.getPortalObject().absolute_url();
+                      cat nocall: context/portal_catalog;
+                      slides python:cat(portal_type='JubinSlide', review_state='published', sort_on='getObjPositionInParent');
+                      isIE6Or7 container/isIE6Or7 | nothing" >
+
+           <!-- Sample -->
+           <li tal:repeat="slide slides" >
+            <tal:slide define="slideObj slide/getObject;
+                               slideText slideObj/Description" >
+
+              <tal:ifNotIE67 condition="not: isIE6Or7" >
+                <!-- NOTE : We are NOT using Internet Explorer 6 or 7 -->
+
+                <div class="slide-image" >
+                  <img src="sampleslide1.jpg"
+                       tal:attributes="src string:${slideObj/absolute_url}/image" />
+                </div>
+
+                <div class="slide-text" >
+                 <div style="height:170px !important" >
+                  <h1 style="text-transform: uppercase" tal:content="slideObj/getCategory | string:News" />
+
+                  <h2 tal:content="slideObj/Title" />
+
+                  <p tal:content="slideText" />
+                 </div>
+
+                 <a class="slide-link"
+                   href="#"
+                   tal:attributes="href slideObj/url" >
+                    <img src=""
+                         tal:attributes="src string:$portal_url/bouton_acces_vide.png" />
+                 </a>
+                </div>
+
+              </tal:ifNotIE67>
+
+
+              <tal:ifIE67 condition="isIE6Or7" >
+                <!-- NOTE : We are using Internet Explorer 6 or 7 -->
+
+                <div tal:define="image_src string:${slideObj/absolute_url}/image"
+                   class="slide-image"
+                   tal:attributes="style string:background:url($image_src) no-repeat left top" >
+
+                  <div class="slide-text" >
+                    <div style="height:170px !important; width:370px !important" >
+                     <h1 style="text-transform: uppercase" tal:content="slideObj/getCategory | string:News" />
+
+                     <h2 tal:content="slideObj/Title" />
+
+                     <p tal:content="slideText" />
+                    </div>
+
+                    <!-- On IE 6/7, there seems to be a bug when setting relative position properties, among other annoyances -->
+                    <!-- So we remove the .slide-link class, we do no relative position trick, and we don't use the up/down switch -->
+                    <a href="#"
+                       tal:attributes="href slideObj/url" >
+                      <img src="" style="width:90px; height:24px"
+                           tal:attributes="src string:$portal_url/bouton_lire_up.png" />
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </tal:ifIE67>
+
+            </tal:slide>
+           </li>
+
+      </ul>
+      </div>
+
+</div>

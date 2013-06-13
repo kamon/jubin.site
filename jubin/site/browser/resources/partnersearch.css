@@ -1,0 +1,12 @@
+
+.documentFirstHeading {      /* Hide the element used by the z3cform-based form first heading */
+    display: none;
+}
+
+a.view-link img {
+    background: url(bouton_lire_up.png) no-repeat left top;
+}
+
+a.view-link:hover img {
+    background: url(bouton_lire_down.png) no-repeat left top;
+}

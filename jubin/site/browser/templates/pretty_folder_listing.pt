@@ -1,0 +1,122 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<head>
+    <!-- metal:noborder fill-slot="top_slot"
+                    tal:define="dummy python:request.set('disable_border',1);" / -->
+</head>
+
+<body>
+
+    <div metal:fill-slot="main">
+    <metal:main-macro define-macro="main"
+                      tal:define="kssClassesView context/@@kss_field_decorator_view;
+                                  getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                                  templateId template/getId">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 metal:use-macro="here/kss_generic_macros/macros/generic_title_view">
+            Title or id
+        </h1>
+
+        <!-- div tal:replace="structure provider:plone.belowcontenttitle" / -->
+
+        <p metal:use-macro="here/kss_generic_macros/macros/generic_description_view">
+            Description
+        </p>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <metal:listingmacro define-macro="listing">
+        <tal:foldercontents define="contentFilter python:{'portal_type':['News Item','BurocomArticle']};
+                            limit_display limit_display|request/limit_display|nothing;
+                            more_url more_url|request/more_url|string:folder_contents;
+                            folderContents python:here.portal_type=='Topic' and here.queryCatalog(contentFilter, batch=True) or here.getFolderContents(contentFilter, batch=True, b_size=limit_display or 100);
+                            use_view_action site_properties/typesUseViewActionInListings|python:();
+                            over_limit python: limit_display and len(folderContents) > limit_display;
+                            folderContents python: (over_limit and folderContents[:limit_display]) or folderContents;
+                            normalizeString nocall:context/@@plone/normalizeString;
+                            isAnon context/@@plone_portal_state/anonymous;
+                            batch folderContents;">
+        <tal:listing condition="folderContents">
+
+        <table id="pretty-folder-listing" >
+
+            <tal:block tal:repeat="item folderContents">
+                <tr tal:define="item_url item/getURL|item/absolute_url;
+                                       item_id item/getId|item/id;
+                                       item_title_or_id item/pretty_title_or_id;
+                                       item_description item/Description;
+                                       item_type item/portal_type;
+                                       item_type_title item/Type;
+                                       item_type_class python: 'contenttype-' + normalizeString(item_type);
+                                       item_modified item/ModificationDate;
+                                       item_created item/CreationDate;
+                                       item_creator item/Creator;
+                                       item_start item/start/ISO|item/StartDate|nothing;
+                                       item_end item/end/ISO|item/EndDate|nothing;
+                                       item_object item/getObject;
+                                       item_is_newsitem python:item_type == 'News Item'"
+                       >
+
+                      <td tal:condition="item_is_newsitem" width="10%" valign="top" >
+                         <span tal:replace="python:toLocalizedTime(item_modified, long_format=0)" />
+                      </td>
+
+                      <td width="90%" tal:attributes="width python:(item_is_newsitem and '90%') or '100%'" >
+                        <h2>
+                          <a href="#"
+                             tal:attributes="href item_url"
+                             tal:content="item_title_or_id" >
+                            Item Title
+                          </a>
+                        </h2>
+
+                        <table width="100%" >
+                          <tr>
+                             <td width="80%" valign="top" >
+                               <div class="pretty-folder-listing-item-desc"
+                                    tal:content="structure item_description | nothing" />
+ 
+                               <div tal:condition="item_is_newsitem" 
+                                    tal:content="structure item_object/getText | nothing" />
+                             </td>
+                             <td width="20%" valign="top" >
+                                 <a href="" tal:condition="item_object/getImage | nothing"
+                                            tal:attributes="href item_url;
+                                                            title item_object/getImageCaption" >
+                                   <img tal:attributes="src string:$item_url/image_mini;
+                                                        alt item_object/getImageCaption" />
+                                 </a>
+                             </td>
+                          </tr>
+                        </table>
+                      </td>
+                </tr>
+            </tal:block>
+
+        </table>
+
+        <!-- Navigation -->
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+        </tal:listing>
+
+        </tal:foldercontents>
+        </metal:listingmacro>
+
+        <metal:subtopics use-macro="here/atct_topic_view/macros/folderlisting_macro" />
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </metal:main-macro>
+    </div>
+
+</body>
+</html>

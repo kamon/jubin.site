@@ -1,0 +1,66 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="jubin.site">
+
+  <!-- configure your content components here -->
+
+  <!-- -*- extra stuff goes here -*- -->
+  <class class=".commercial.JubinCommercialPartner">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.IJubinCommercialPartner"
+        />
+    <require
+        permission="cmf.ModifyPortalContent"
+        set_schema="..interfaces.IJubinCommercialPartner"
+        />
+  </class>
+
+  <!-- -*- extra stuff goes here -*- -->
+  <class class=".restaurant.JubinRestaurantPartner">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.IJubinRestaurantPartner"
+        />
+    <require
+        permission="cmf.ModifyPortalContent"
+        set_schema="..interfaces.IJubinRestaurantPartner"
+        />
+  </class>
+
+  <!-- -*- extra stuff goes here -*- -->
+  <class class=".station.JubinStationPartner">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.IJubinStationPartner"
+        />
+    <require
+        permission="cmf.ModifyPortalContent"
+        set_schema="..interfaces.IJubinStationPartner"
+        />
+  </class>
+
+  <class class=".addressbook.JubinAddressBook">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.IJubinAddressBook"
+        />
+    <require
+        permission="cmf.ModifyPortalContent"
+        set_schema="..interfaces.IJubinAddressBook"
+        />
+  </class>
+
+  <class class=".slide.JubinSlide">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.IJubinSlide"
+        />
+    <require
+        permission="cmf.ModifyPortalContent"
+        set_schema="..interfaces.IJubinSlide"
+        />
+  </class>
+
+</configure>

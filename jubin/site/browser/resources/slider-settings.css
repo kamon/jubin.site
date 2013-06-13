@@ -1,0 +1,114 @@
+﻿
+#easySlider-goToButtons {
+ display:none;
+}
+
+#slider_container {
+    /*margin:0 auto;*/
+    width:695px;
+    margin-right: 0em;
+    position: absolute;
+    top: 115px;
+    left: 240px;
+
+}
+
+#slider{}
+
+#slider ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+
+    width:695px;
+    height:190px;
+}
+	
+	
+#slider li{
+    margin:0;
+    padding:0;
+
+    list-style:none;
+    /* 
+	define width and height of list item (slide)
+	entire slider area will adjust according to the parameters provided here
+    */ 
+    width:695px;
+    height:210px;
+
+    overflow:hidden;
+
+}
+
+
+.slide-image {
+    margin:0;
+    padding:0;
+    float: left;
+
+    width:355px;
+    height:190px;
+}
+
+.slide-image img {
+    margin:0;
+    padding:0;
+
+    width:355px;
+    height:190px;
+}
+
+
+.slide-text {
+    /*float: right;*/
+    color: white;
+
+    width:310x;  /* 10px smaller than specified */
+    height:199px !important;
+
+    padding-left: 375px !important;  /* The image width (355px) + 20px for the specified padding */
+}
+
+.slide-text h1 {
+    font: verdana bold 27px;
+    font-size:170%;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:15px;
+    border-bottom: none;
+    color: white;
+}
+
+.slide-text h2 {
+    border-bottom: none;
+    color: #e5332c; 
+    font: verdana bold 22px;
+    font-size:150%;
+    font-weight:bold;
+    margin-right:50px;
+}
+
+.slide-text p {
+    color: white;
+    font: verdana bold 15px;
+    font-size:100%;
+    font-weight:bold;
+    margin-right:50px;
+}
+
+
+a.slide-link img {
+    color: white;
+    position: relative;
+    top: -20px;
+    left: 220px;
+    height:30px !important;
+
+    background: url(bouton_lire_up.png) no-repeat left top;
+}
+
+a.slide-link:hover img {
+    background: url(bouton_lire_down.png) no-repeat left top;
+}
+

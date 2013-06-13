@@ -1,0 +1,111 @@
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+
+
+##pfg-fieldwrapper input {
+float:right;
+margin-right:250px;
+margin-top:-18px;
+
+}
+
+.formQuestion  {
+color:#000000;
+}
+
+
+
+/* Slider customization */
+/* Move the below code to resources++slider-settings.css when working fine */
+
+#slider_container {
+    /*margin:0 auto;*/
+    width:695px;
+
+    margin-right: 0em;
+    position: absolute;
+    top: 115px;
+    left: 236px;
+
+}
+
+#slider{}
+
+#slider ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+
+    width:695px;
+    height:190px;
+}
+	
+	
+#slider li{
+    margin:0;
+    padding:0;
+
+    list-style:none;
+    /* 
+	define width and height of list item (slide)
+	entire slider area will adjust according to the parameters provided here
+    */ 
+    width:695px;
+    height:190px;
+
+    overflow:hidden;
+
+}
+
+
+.slide-image {
+    margin:0;
+    padding:0;
+    float: left;
+
+    width:355px;
+    height:190px;
+}
+.slide-image img {
+    margin:0;
+    padding:0;
+
+    width:355px;
+    height:190px;
+}
+
+.slide-text {
+    /*float: right;*/
+    color: white;
+    
+    width:310x;  /* 10px smaller than specified */
+    height:160px;
+
+    padding-left: 375px !important;  /* The image width (355px) + 20px for the specified padding */
+}
+
+.slide-text h1 {
+    font: verdana bold 27px;
+    border-bottom: none;
+    color: white;
+}
+
+.slide-text h2 {
+    border-bottom: none;
+    color: #e5332c; 
+    font: verdana bold 22px;
+}
+
+.slide-text p {
+    color: white;
+    font: verdana bold 15px;
+}
+
+.slide-text a.slide-link {
+    color: white;
+}
+
+
+/* </dtml-with> */
+
+

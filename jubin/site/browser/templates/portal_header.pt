@@ -1,0 +1,43 @@
+<div id="portal-header">
+  <!-- Completely reworked due to the way the handle the banner/slider -->
+
+  <!-- div tal:replace="structure provider:plone.portalheader" / -->
+
+  <!-- Tabs / Sections -->
+  <h5 class="hiddenStructure" i18n:translate="heading_sections">Sections</h5>
+
+  <ul id="portal-globalnav"
+        tal:define="context_state nocall:context/@@plone_context_state;
+                    portal_tabs_view nocall:context/@@portal_tabs_view;
+                    actions python: context_state.actions();
+                    portal_tabs python: portal_tabs_view.topLevelTabs(actions=actions);
+                    selected_tabs python:context.selectedTabs('index_html', context, portal_tabs);
+                    selected_portal_tab selected_tabs/portal" >
+
+        <tal:tabs tal:repeat="tab portal_tabs"><li tal:attributes="id string:portaltab-${tab/id};
+                            class python: selected_portal_tab==tab['id'] and 'selected' or 'plain'"
+            ><a href="" 
+               tal:content="tab/name"
+               tal:attributes="href tab/url;
+                               title tab/description|nothing;">
+            Tab Name
+            </a></li></tal:tabs>
+
+  </ul>
+
+  <tal:block define="portal_url nocall: context/portal_url;
+                     navigation_root_url python:portal_url.getPortalObject().absolute_url();" >
+
+    <!-- Logo -->
+    <a id="portal-logo"
+       accesskey="1"
+       tal:attributes="href navigation_root_url"
+       i18n:domain="plone">
+        <img src="logo.jpg" alt="" tal:attributes="src string:$navigation_root_url/logo.jpg" />
+    </a>
+
+  </tal:block>
+
+  <tal:slider content="structure context/@@banner" />
+
+</div>

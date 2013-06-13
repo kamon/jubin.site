@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="reindex-jubin.site" version="20100406-01"
+              handler="jubin.site.setuphandlers.reindexCatalog"
+              title="Reindex the new catalogs">
+  <dependency step="catalog"/>
+  Reindex the new catalogs
+ </import-step>
+</import-steps>

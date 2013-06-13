@@ -1,0 +1,20 @@
+<html metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone" >
+<body>
+
+<div metal:fill-slot="main" >
+
+  <h1 tal:content="context/Title" />
+
+  <p tal:content="context/Description" />
+
+  <metal:field use-macro="python:here.widget('image', mode='view')" />
+
+  <metal:field use-macro="python:here.widget('url', mode='view')" />
+
+</div>
+
+</body>
+
+</html>
+
