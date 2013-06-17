@@ -22,6 +22,7 @@ JUBIN_STATES = [
    ('CH-GE', u'Genève'), 
    ('CH-JU', u'Jura'), 
    ('CH-NE', u'Neuchâtel'), 
+   ('CH-TI', u'Tessin'), 
    ('CH-VS', u'Valais'), 
    ('CH-VD', u'Vaud'),
 ]

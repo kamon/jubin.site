@@ -53,7 +53,7 @@ class SwissStatesFromFile(object):
     """
     implements(ISwissStates)
 
-    # Commented out since e finlly use the config module to get the dt from 'JUBIN_STATES'
+    # Commented out since we finlly use the config module to get the dt from 'JUBIN_STATES'
     #def __init__(self):
     #    iso3166_path = path.join(path.dirname(collective.contacts.vocabularies.__file__), 'iso3166')
     #    self.csparser = CountriesStatesParser(iso3166_path)
